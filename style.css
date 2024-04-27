@@ -24,6 +24,7 @@
 }
 .regular { font-family: 'cf'; }
 .italic { font-family: 'cf-italic'; }
+.button-selected { color: var(--green) !important; background-color: var(--selection) !important; }
 
 body {
   position: absolute;
@@ -38,7 +39,7 @@ body {
 }
 
 header {
-  border-bottom: 2px solid var(--selection);
+  background-color: var(--background);
   width: calc(100% - 32px);
   padding: 16px;
   position: fixed;
@@ -49,10 +50,111 @@ header {
   text-align: center;
 }
 
-footer {
+main {
+  padding: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+main .status {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+main .status .regular {
+  letter-spacing: 2px;
+}
+
+main .action {
+  margin-bottom: 32px;
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+main .action button {
+  border: 1px solid var(--foreground);
+  border-radius: 8px;
+  background-color: var(--background);
+  color: var(--text); 
+  width: 48px;
+  height: 48px;
+  font-family: 'cf';
+  font-weight: lighter;
+  font-size: 28px;
+  text-align: center;
+  cursor: pointer;
+}
+main .action button:hover {
+  background-color: var(--selection);
+}
+main .action button:active {
+  background-color: var(--background);
+}
+
+main .grid-container {
+  padding: 8px;
+}
+#gameboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  
+}
+#gameboard .cell {
+  width: 80px;
+  height: 80px;
+  display:  flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'cf';
+  font-size: 48px;
+}
+#gameboard .cell .index0 { grid-area: 1 / 1 / 2 / 2; }
+#gameboard .cell .index1 { grid-area: 1 / 2 / 2 / 3; }
+#gameboard .cell .index2 { grid-area: 1 / 3 / 2 / 4; }
+#gameboard .cell .index3 { grid-area: 2 / 1 / 3 / 2; }
+#gameboard .cell .index4 { grid-area: 2 / 2 / 3 / 3; }
+#gameboard .cell .index5 { grid-area: 2 / 3 / 3 / 4; }
+#gameboard .cell .index6 { grid-area: 3 / 1 / 4 / 2; }
+#gameboard .cell .index7 { grid-area: 3 / 2 / 4 / 3; }
+#gameboard .cell .index8 { grid-area: 3 / 3 / 4 / 4; }
+#gameboard .cell:nth-child(1),
+#gameboard .cell:nth-child(2),
+#gameboard .cell:nth-child(3) {
+  border-bottom: 2px solid var(--selection);
+}
+#gameboard .cell:nth-child(7),
+#gameboard .cell:nth-child(8),
+#gameboard .cell:nth-child(9) {
   border-top: 2px solid var(--selection);
-  width: calc(100% - 8px);
-  padding: 16px 4px;
+}
+#gameboard .cell:nth-child(1),
+#gameboard .cell:nth-child(4),
+#gameboard .cell:nth-child(7) {
+  border-right: 2px solid var(--selection);
+}
+#gameboard .cell:nth-child(3),
+#gameboard .cell:nth-child(6),
+#gameboard .cell:nth-child(9) {
+  border-left: 2px solid var(--selection);
+}
+
+footer {
+  background-color: var(--background);
+  width: calc(100% - 16px);
+  padding: 8px 8px;
   position: fixed;
   bottom: 0;
   left: 0;
