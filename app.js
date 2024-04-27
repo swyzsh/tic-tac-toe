@@ -17,20 +17,31 @@ function Player(name, mark) {
   this.mark = mark;
 }
 
+let turnP1 = false;
+let turnP2 = false;
+
 function Gameboard(p1_mark, p2_mark) {
-  
+
   let gameboard = [
     ['[ ]', '[ ]', '[ ]'],
     ['[ ]', '[ ]', '[ ]'],
     ['[ ]', '[ ]', '[ ]']
   ]
 
+  if (p1_mark === 'x' && p1_mark === 'X' && turnP1 == true) {
+
+  } else if (p2_mark === 'x' && p2_mark === 'X' && turnP2 == true) {
+
+  }
+
   return gameboard;
 }
 
-const player1 = new Player('user', 'X');
-const player2 = new Player('bot', 'Y');
-
-let game = new Gameboard(player1.mark, player2.mark);
-
-console.log(game);
+function controller() {
+  const player1 = new Player('user', 'X');
+  const player2 = new Player('bot', 'Y');
+  
+  let game = new Gameboard(player1.mark, player2.mark);
+  
+  console.log(game);  
+}

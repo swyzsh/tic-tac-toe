@@ -1,0 +1,85 @@
+/* Color Scheme: Dracula */
+:root {
+  --background: #282a36;
+  --selection: #44475a;
+  --foreground: #f8f8f2;
+  --comment: #6272a4;
+  --green: #50fa7b;
+  --red: #ff5555;
+  --pink: #ff79c6;
+}
+
+@font-face {
+  font-family: 'cf';
+  src: url(./metadata/CartographCF-Regular.ttf);
+}
+@font-face {
+  font-family: 'cf-italic';
+  src: url(./metadata/CartographCF-RegularItalic.ttf);
+}
+
+.noTextSelect {
+  user-select: none;
+  -webkit-user-select: none;
+}
+.regular { font-family: 'cf'; }
+.italic { font-family: 'cf-italic'; }
+
+body {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'cf';
+}
+
+header {
+  border-bottom: 2px solid var(--selection);
+  width: calc(100% - 32px);
+  padding: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  letter-spacing: 1px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+footer {
+  border-top: 2px solid var(--selection);
+  width: calc(100% - 8px);
+  padding: 16px 4px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+footer span {
+  word-break: break-all;
+  letter-spacing: 1px;
+  text-align: center;
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+footer span:hover {
+  color: var(--pink);
+}
+footer span:active {
+  color: var(--foreground);
+}
+footer .socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
