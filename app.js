@@ -1,77 +1,112 @@
-/*
-Attempt at making "Terminal First" tic-tac-toe before building frontend
+function Gameboard() {
+  this.cells = document.querySelectorAll("#gameboard .cell");
+  this.currentPlayer = null;
+  this.player1 = null;
+  this.player2 = null;
+  this.turn = 0;
 
-for the gameboard make a position object with cells 3x3
-store gameboard as an array inside of Gameboard object
-
-store players inside object as well - 2 players can only play this game
-
-make an object to control the flow of the game itself
-
-the way game works is gameboard needs to be changed with the new input and printed again in the console.
-
-*/
-
-function Player(name, mark) {
-  this.name = name;
-  this.mark = mark;
-}
-
-let turnP1 = false;
-let turnP2 = false;
-
-function Gameboard(p1_mark, p2_mark) {
-
-  const cell0 = (document.querySelector(".index0")).textContent;
-  const cell1 = (document.querySelector(".index1")).textContent;
-  const cell2 = (document.querySelector(".index2")).textContent;
-  const cell3 = (document.querySelector(".index3")).textContent;
-  const cell4 = (document.querySelector(".index4")).textContent;
-  const cell5 = (document.querySelector(".index5")).textContent;
-  const cell6 = (document.querySelector(".index6")).textContent;
-  const cell7 = (document.querySelector(".index7")).textContent;
-  const cell8 = (document.querySelector(".index8")).textContent;
-
-  let gameboard = [
-    [cell0, cell1, cell2],
-    [cell3, cell4, cell5],
-    [cell6, cell7, cell8]
-  ]
-
-  if (p1_mark === 'x' && p1_mark === 'X' && turnP1 == true) {
-
-  } else if (p2_mark === 'x' && p2_mark === 'X' && turnP2 == true) {
-
+  this.updateStatus = function() {
+    this.statusTurn = document.querySelector(".status .regular");
+    this.statusRemark = document.querySelector(".status .italic");
+    this.statusTurn.textContent = `PLAYER ${this.currentPlayer === this.player1 ? `1` : `2`}`;
+    this.statusRemark.textContent = `${this.currentPlayer.mark === this.player1.mark ? this.player1.mark : this.player2.mark}, it's your turn...`;
   }
 
-  return gameboard;
+  this.checkWin = function(mark) {
+    const winningCombination = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+      [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
+
+    return winningCombination.some(combination => {
+      return combination.every(index => {
+        return this.cells[index].textContent === mark;
+      });
+    });
+  };
+
+  this.updateStatusWin = function(player) {
+    this.statusTurn.textContent = `PLAYER ${player === this.player1 ? `1` : `2`}`;
+    this.statusRemark.textContent = `You won!!!`;
+  };
+
+  this.initialize = function(player1, player2) {
+    this.player1 = player1;
+    this.player2 = player2;
+    this.currentPlayer = player1;
+    this.updateStatus();
+    this.cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        if (!cell.textContent) {
+          cell.textContent = this.currentPlayer.mark;
+          
+          if (this.currentPlayer === this.player1) {
+            cell.classList.add("player1-mark");
+          } else if (this.currentPlayer === this.player2) {
+            cell.classList.add("player2-mark");
+          }
+
+          // check for a win after each move
+          if (this.checkWin(this.currentPlayer.mark)) {
+            this.updateStatusWin(this.currentPlayer);
+            // disable further moves after a win
+            this.cells.forEach(cell => {
+              cell.removeEventListener('click', arguments.callee);
+            });
+          } else {
+            this.turn++;
+            this.currentPlayer = this.turn % 2 === 0 ? this.player1 : this.player2;
+            this.updateStatus();
+          }
+        }
+      });
+    });
+  };
 }
 
-function controller() {
-  // handle player's mark choice
-  const markXbtn = document.getElementById("mark-x");
-  const markYbtn = document.getElementById("mark-o");
-
-  let initialMark = markXbtn;
-  let player1;
-  let player2;
-  let game;
-
-  if (initialMark == markXbtn) {
-    player1 = new Player('user', 'X');
-    player2 = new Player('bot', 'Y');
-    game = new Gameboard(player1.mark, player2.mark);
-
-    console.log(game);
-
-  } else if (initialMark == markYbtn) {
-    player1 = new Player('user', 'Y');
-    player2 = new Player('bot', 'X');
-    game = new Gameboard(player1.mark, player2.mark);
-
-    console.log(game);
-
+document.addEventListener('DOMContentLoaded', function() {
+  function Player(name, mark) {
+    this.name = name;
+    this.mark = mark;
   }
-}
 
-controller();
+  let player1, player2;
+  let game = new Gameboard();
+  
+  function toggleButtons(selectedBtn, otherBtn) {
+    selectedBtn.classList.add("button-selected");
+    selectedBtn.disabled = false;
+    otherBtn.classList.remove("button-selected");
+    otherBtn.classList.add("disabled");
+    otherBtn.disabled = true;
+  }
+  
+  function controller() {
+    const markXbtn = document.getElementById("mark-x");
+    const markYbtn = document.getElementById("mark-o");
+    const statusTurn = document.querySelector(".status .regular");
+    const statusRemark = document.querySelector(".status .italic");
+
+    function updateInitialStatus() {
+      statusTurn.textContent = `PLAYER 1`;
+      statusRemark.textContent = `it's your turn...`;
+    }
+    
+    markXbtn.addEventListener('click', function() {
+      toggleButtons(markXbtn, markYbtn);
+      player1 = new Player('User', 'X');
+      player2 = new Player('Bot', 'O');
+      game.initialize(player1, player2);
+      updateInitialStatus();
+    });
+    markYbtn.addEventListener('click', function() {
+      toggleButtons(markYbtn, markXbtn);
+      player1 = new Player('User', 'O');
+      player2 = new Player('Bot', 'X');
+      game.initialize(player1, player2);
+      updateInitialStatus();
+    });
+  }
+  controller();
+});
