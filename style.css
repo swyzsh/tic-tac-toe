@@ -169,8 +169,8 @@ main .grid-container {
 
 footer {
   background-color: var(--background);
-  width: calc(100% - 16px);
-  padding: 8px 8px;
+  width: calc(100% - 24px);
+  padding: 12px 12px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -181,12 +181,11 @@ footer {
   gap: 8px;
 }
 footer span {
+  font-size: 0.72rem;
   word-break: break-all;
-  letter-spacing: 1px;
   text-align: center;
   color: var(--foreground);
   cursor: pointer;
-  font-size: 0.8rem;
 }
 footer span:hover {
   color: var(--pink);
@@ -199,5 +198,5 @@ footer .socials {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }

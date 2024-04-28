@@ -66,6 +66,24 @@ function Gameboard() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  // hyperlinks
+  const personalGit = document.getElementById("personal-github");
+  personalGit.addEventListener('click', function() {
+    window.open('https://github.com/swyzsh', '_self');
+  });
+  const projectGit = document.getElementById("project-github");
+  projectGit.addEventListener('click', function() {
+    window.open('https://github.com/swyzsh/tic-tac-toe', '_self');
+  });
+  const personalTwitter = document.getElementById("personal-twitter");
+  personalTwitter.addEventListener('click', function() {
+    window.open('https://twitter.com/swyzsh', '_self');
+  });
+  const portfolio = document.getElementById("portfolio");
+  portfolio.addEventListener('click', function() {
+    window.open('https://www.swyzsh.com', '_self');
+  });
+
   function Player(name, mark) {
     this.name = name;
     this.mark = mark;
